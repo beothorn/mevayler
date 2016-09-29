@@ -23,14 +23,14 @@ public class Mevayler<T> {
         for (final SerializableFunction<U, U> function : functions) {
             final Mevayler<U> nextBind = mevaylerMonad.flatMap((subjectBind) -> {
                 final U transformedSubject = function.apply(subjectBind);
-                return Mevayler.of(transformedSubject);
+                return Mevayler.result(transformedSubject);
             });
             mevaylerMonad = nextBind;
         }
         return mevaylerMonad;
     }
 
-    public static <U> Mevayler<U> of(final U subject) {
+    public static <U> Mevayler<U> result(final U subject) {
         return new Mevayler<>(subject);
     }
 
